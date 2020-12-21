@@ -104,6 +104,11 @@
 
     }
 
+    public function group(Array $group = []){
+      $this->group = $group;
+      return $this;
+    }
+
     private function whereBuild($param = array(), $logic = "AND"){
       $array = array(
         "column" => "",
@@ -139,6 +144,12 @@
         $sql .= ")";
       }
 
+      if($this->group){
+        $group = " GROUP BY ";
+        $group .= implode(', ', $this->group);
+        $sql .= $group;
+      }
+
       if($this->order){
         $orderBy = " ORDER BY ";
         $orderBy .= implode(', ', array_map(function($key){
@@ -172,7 +183,7 @@
       if($query->execute()){
         $this->query = $query;
       }else{
-        return exit('falied');
+        return false;
       }
       return $this;
     }
