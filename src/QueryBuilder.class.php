@@ -21,7 +21,7 @@
         $fieldsArray[] = $fields;
         $fields = $fieldsArray;
       }
-      $select = new Select($fields);
+      $select = new Select($fields, $this->pdo);
       return $select;
     }
   }

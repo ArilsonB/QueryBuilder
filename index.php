@@ -20,7 +20,9 @@
 
   $query = new MyB\QueryBuilder($pdo);
 
-  echo $query->select()->from('aaa','bbb')->where([
+  $query = $query->select()->from('posts','p')->where([
     "user" => "ArilsonB"
   ]);
+  $query = $query->execute();
+
 ?>
