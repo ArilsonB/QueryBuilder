@@ -20,9 +20,28 @@
 
   $query = new MyB\QueryBuilder($pdo);
 
-  $query = $query->select()->from('posts','p')->where([
-    "user" => "ArilsonB"
-  ]);
-  $query = $query->execute();
+  $limit = 9;
+  if(isset($_GET['p']) && $page = $_GET['p']){
+    $offset = ($page-1) * $limit; 
+  }else{
+    $offset = 0;
+  }
+
+  $query = $query->select(["p.id","p.title","p.content"])->from('posts','p')
+  ->join('post_tags as tags', 'tags.post_id = p.id', 'LEFT')
+  ->order([array("field" => "p.id", "dir" => "ASC")])
+  ->limit($limit)
+  ->offset($offset);
+
+  $query = $query->execute()->fetch();
+
+  foreach($query as $post){
+    echo<<<"HTML"
+      <p>
+        <h1>$post[id] – $post[title]</h1>
+        <p>$post[content]</p>
+      </p>
+    HTML;
+  }
 
 ?>
