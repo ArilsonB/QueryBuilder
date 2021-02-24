@@ -1,0 +1,13 @@
+{
+    "name": "arilsonb/query-builder",
+    "description": "QueryBuilder for PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arilson B. Ferreira",
+            "email": "arilsonbrj@gmail.com"
+        }
+    ],
+    "require": {}
+}
