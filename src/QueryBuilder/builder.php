@@ -5,7 +5,7 @@
   use \PDOException as PDOException;
 
   class QueryBuilder extends PDO {
-    protected $conn;
+    protected $connection;
     private $operators = [
       '=', 
       '>', 
@@ -33,13 +33,15 @@
           case 'sqlite':
             $client = "sqlite";
             $dbfile = isset($file) ? $file : realpath( __DIR__ . "/database.sqlite" );
-            $conn = sprintf("$client:$file");
+            $connection = sprintf("$client:$file");
             break;
           case 'pgsql':
             $client = "pgsql";
+            $connection = sprintf("");
             break;
           case 'oracle':
             $client = "oci";
+            $connection = sprintf("");
             break;
           default:
             $client = "mysql";
@@ -49,7 +51,7 @@
             $hostname = isset($hostname) ? $hostname : 'localhost';
             $username = isset($username) ? $username : 'root';
             $password = isset($password) ? $password : '';
-            $conn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s;connect_timeout=%s', $hostname, $port, $database, $charset, $timeout);
+            $connection = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s;connect_timeout=%s', $hostname, $port, $database, $charset, $timeout);
         }
         try {
           if(isset($username,$password)){
@@ -71,7 +73,23 @@
       }
     }
 
-    public function Select(){
+    public function select(...$fields)
+    {
+
+    }
+
+    public function insert()
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
+    public function fields()
+    {
 
     }
 
@@ -82,6 +100,20 @@
 
     protected function error(){
 
+    }
+
+    protected function debug($statement)
+    {
+      ob_start();
+      $statement->debugDumpParams();
+      $output = ob_get_contents() ?: null;
+      ob_end_clean();
+      return '<pre>'.htmlspecialchars($output).'</pre>';
+    }
+
+    function __destruct()
+    {
+      $this->conn = null;
     }
 
   }
