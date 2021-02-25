@@ -64,10 +64,10 @@
           }
   
         } catch (PDOException $e){
-          return exit($e->getMessage());
+          return trigger_error('Error occured while trying to connect with database ' . $e->getMessage(), E_USER_ERROR);
         }
       }else{
-        exit (new PDOException("Fatal error, connection falied."));
+        return trigger_error('Fatal Error occured in connection settings.', E_USER_ERROR);
       }
     }
 
