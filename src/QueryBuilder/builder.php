@@ -46,6 +46,9 @@
             $port = isset($port) ? $port : 3306;
             $timeout = isset($timeout) ? $timeout : 15;
             $charset = isset($charset) ? $charset : 'utf8mb4';
+            $hostname = isset($hostname) ? $hostname : 'localhost';
+            $username = isset($username) ? $username : 'root';
+            $password = isset($password) ? $password : '';
             $conn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s;connect_timeout=%s', $hostname, $port, $database, $charset, $timeout);
         }
         try {
